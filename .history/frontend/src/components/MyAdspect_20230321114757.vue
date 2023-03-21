@@ -2,7 +2,6 @@
   <div class="reports">
     <div class="repotsInner">
       <div class="tableBlock">
-        <h2 class="tableBlockTitle">Streams</h2>
         <table>
           <thead class="tableTitles">
             <tr>
@@ -21,9 +20,7 @@
         </table>
       </div>
       <div class="tableBlock">
-        <h2 class="tableBlockTitle">Streams With Click</h2>
-        <Skeleton v-if="!haveData" :count="10" height="30px" />
-        <table v-else v-show="!lengthZero">
+        <table>
           <thead class="tableTitles">
             <tr>
               <th>Name</th>
@@ -37,7 +34,6 @@
             </tr>
           </tbody>
         </table>
-        <p v-show="lengthZero">No data</p>
       </div>
     </div>
   </div>
@@ -49,15 +45,10 @@ import { Skeleton } from 'vue-loading-skeleton';
 
 export default {
   name: 'MyAdspect',
-  components: {
-    Skeleton,
-  },
   data() {
     return {
       streams: [],
       streamswithclick: [],
-      haveData: false,
-      lengthZero: false,
     };
   },
   async mounted() {
@@ -74,12 +65,6 @@ export default {
     await axios
       .get('/api/streamswithclick')
       .then((response) => {
-        if (response) {
-          this.haveData = true;
-          if (response.data.length === 0) {
-            this.lengthZero = true;
-          }
-        }
         this.streamswithclick = response.data;
         console.log(this.streams);
       })
@@ -115,10 +100,7 @@ export default {
   width: 100%;
   max-height: 50%;
   overflow-y: scroll;
-}
-.tableBlockTitle{
-  margin-bottom: 20px;
-  margin-left: 10px;
+  border: 1px solid #000;
 }
 
 /* table */

@@ -62,7 +62,9 @@ app.get('/api/streams', (req, res) => {
 });
 
 app.get('/api/streamswithclick', (req, res) => {
-  getStreamsWithClick(res);
+  getStreamsWithClick().then((data) => {
+    res.send(data);
+  });
 });
 
 app.listen(PORT, () => {

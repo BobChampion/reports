@@ -16,7 +16,6 @@ const { voluumnAuth } = require('./helpers/voluumn/axiosFunctions');
 
 //puppetter
 const { doPuppetterTask, tests } = require('./helpers/voluumn/puppetterrFunctions');
-const { getStreamsWithClick } = require('./helpers/adspect/puppetteer');
 
 app.use(express.static(path.join(__dirname, '../frontend/dist')));
 
@@ -59,10 +58,6 @@ app.get('/api/streams', (req, res) => {
   getStreams().then((data) => {
     res.send(data);
   });
-});
-
-app.get('/api/streamswithclick', (req, res) => {
-  getStreamsWithClick(res);
 });
 
 app.listen(PORT, () => {

@@ -2,7 +2,6 @@
   <div class="reports">
     <div class="repotsInner">
       <div class="tableBlock">
-        <h2 class="tableBlockTitle">Streams</h2>
         <table>
           <thead class="tableTitles">
             <tr>
@@ -21,9 +20,8 @@
         </table>
       </div>
       <div class="tableBlock">
-        <h2 class="tableBlockTitle">Streams With Click</h2>
         <Skeleton v-if="!haveData" :count="10" height="30px" />
-        <table v-else v-show="!lengthZero">
+        <table v-else>
           <thead class="tableTitles">
             <tr>
               <th>Name</th>
@@ -77,7 +75,7 @@ export default {
         if (response) {
           this.haveData = true;
           if (response.data.length === 0) {
-            this.lengthZero = true;
+            lengthZero ==
           }
         }
         this.streamswithclick = response.data;
@@ -115,10 +113,7 @@ export default {
   width: 100%;
   max-height: 50%;
   overflow-y: scroll;
-}
-.tableBlockTitle{
-  margin-bottom: 20px;
-  margin-left: 10px;
+  border: 1px solid #000;
 }
 
 /* table */

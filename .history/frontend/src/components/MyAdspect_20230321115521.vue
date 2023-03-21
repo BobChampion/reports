@@ -21,7 +21,7 @@
         </table>
       </div>
       <div class="tableBlock">
-        <h2 class="tableBlockTitle">Streams With Click</h2>
+        <h2 class="tableBlockTitle">StreamsWithClick</h2>
         <Skeleton v-if="!haveData" :count="10" height="30px" />
         <table v-else v-show="!lengthZero">
           <thead class="tableTitles">
@@ -115,10 +115,10 @@ export default {
   width: 100%;
   max-height: 50%;
   overflow-y: scroll;
+  border: 1px solid #000;
 }
 .tableBlockTitle{
-  margin-bottom: 20px;
-  margin-left: 10px;
+  ma
 }
 
 /* table */

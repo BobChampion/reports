@@ -115,6 +115,7 @@ export default {
   width: 100%;
   max-height: 50%;
   overflow-y: scroll;
+  border: 1px solid #000;
 }
 .tableBlockTitle{
   margin-bottom: 20px;
