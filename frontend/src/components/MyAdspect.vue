@@ -28,12 +28,14 @@
             <tr>
               <th>Name</th>
               <th>Click Count</th>
+              <th>Created Date</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="stream in streamswithclick" :key="stream.stream_id">
               <td>{{ stream.name }}</td>
               <td>{{ stream.clickCount }}</td>
+              <td>{{ stream.createdDate }}</td>
             </tr>
           </tbody>
         </table>
@@ -81,7 +83,7 @@ export default {
           }
         }
         this.streamswithclick = response.data;
-        console.log(this.streams);
+        console.log(this.streamswithclick);
       })
       .catch((error) => {
         console.error(error);
@@ -116,7 +118,7 @@ export default {
   max-height: 50%;
   overflow-y: scroll;
 }
-.tableBlockTitle{
+.tableBlockTitle {
   margin-bottom: 20px;
   margin-left: 10px;
 }

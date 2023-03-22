@@ -2,7 +2,7 @@ const puppeteer = require('puppeteer');
 require('dotenv').config();
 
 let getStreamsWithClick = async (res) => {
-  let streamswithclick = [];
+  let allObj = [];
   (async () => {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
@@ -16,7 +16,7 @@ let getStreamsWithClick = async (res) => {
     await page.goto('https://clients.adspect.ai/login');
     await page.waitForSelector('input#login-id', { visible: true, clickable: true });
     await page.focus('input#login-id');
-    await page.keyboard.type(process.env.ADSPECT_EMAIL);
+    await page.keyboard.type('adspect2me@proton.me');
     await page.waitForSelector('input#login-password', { visible: true, clickable: true });
     await page.focus('input#login-password');
     await page.keyboard.type('p$p!s%FTgD,];9c`');
@@ -25,6 +25,55 @@ let getStreamsWithClick = async (res) => {
       clickable: true,
     });
     await page.click('button.btn.btn-block.btn-lg.btn-primary.font-weight-bold');
+
+    // home
+    await page.waitForSelector(
+      'select.custom-select.custom-select-sm.form-control.form-control-sm',
+      {
+        visible: true,
+        clickable: true,
+      },
+    );
+    await page.click('select.custom-select.custom-select-sm.form-control.form-control-sm');
+    await page.select('select.custom-select.custom-select-sm.form-control.form-control-sm', '100');
+
+    let currentPage = 1;
+    let totalPages = 5;
+    let results = [];
+
+    while (currentPage <= totalPages) {
+      await page.waitForSelector('table#index tbody tr .sorting_1 .flex-fill a', {
+        visible: true,
+        clickable: true,
+      });
+      const allTrs = await page.$$eval('table#index tbody tr', (trs) => {
+        let array = [];
+        trs.forEach((tr) => {
+          let nameTag = tr.querySelector('.sorting_1 .flex-fill a').innerText;
+          let createdDate = tr.querySelector(
+            '.sorting_1 .flex-fill span.text-monospace.text-muted',
+          ).innerText;
+          let obj = {
+            name: nameTag,
+            createdDate: createdDate,
+          };
+          array.push(obj);
+        });
+        return array;
+      });
+
+      results.push(...allTrs);
+      await page.waitForSelector('table#index tbody tr .sorting_1 .flex-fill a', {
+        visible: true,
+        clickable: true,
+      });
+      await page.click('li#index_next');
+
+      currentPage++;
+    }
+    // console.log(results.length);
+
+    // click
     await page.waitForSelector('.navbar-nav .nav-item:nth-child(2)', {
       visible: true,
       clickable: true,
@@ -85,15 +134,25 @@ let getStreamsWithClick = async (res) => {
       });
       return array;
     });
-    streamswithclick = trs;
+
+    for (let i = 0; i < trs.length; i++) {
+      for (let j = 0; j < results.length; j++) {
+        if (trs[i].name === results[j].name) {
+          trs[i].createdDate = results[j].createdDate;
+          break; // exit inner loop as soon as match is found
+        }
+      }
+    }
+
+    allObj = trs;
     await browser.close();
   })()
     .catch((err) => {
       console.log(err);
     })
     .finally(() => {
-      console.log(streamswithclick);
-      res.send(streamswithclick);
+      console.log(allObj);
+      res.send(allObj);
     });
 };
 
