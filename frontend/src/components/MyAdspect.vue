@@ -2,20 +2,28 @@
   <div class="reports">
     <div class="repotsInner">
       <div class="tableBlock">
-        <h2 class="tableBlockTitle">Streams</h2>
+        <h2 class="tableBlockTitle">
+          Streams <span>{{ filterStreamsWithNoLink.length }}</span>
+        </h2>
         <table>
           <thead class="tableTitles">
             <tr>
               <th>Name</th>
               <th>Account Id</th>
               <th>Stream Id</th>
+              <td>Delete</td>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="stream in filterStreams" :key="stream.stream_id">
+            <tr v-for="stream in filterStreamsWithNoLink" :key="stream.stream_id">
               <td>{{ stream.name }}</td>
               <td>{{ stream.account_id }}</td>
               <td>{{ stream.stream_id }}</td>
+              <td>
+                <button @click="deleteStream(stream.stream_id)" class="streamDeleteBtn">
+                  Delete
+                </button>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -89,12 +97,32 @@ export default {
         console.error(error);
       });
   },
+  methods: {
+    async deleteStream(streamId) {
+      try {
+        await axios.delete(`https://api.adspect.net/v1/streams/${streamId}`);
+        this.filterStreamsWithNoLink = this.filterStreamsWithNoLink.filter(
+          (stream) => stream.stream_id !== streamId,
+        );
+      } catch (error) {
+        console.error(error);
+      }
+    },
+  },
   computed: {
     filterStreams() {
       return this.streams.filter(
         (stream) =>
           stream.money_pages[0].page === 'https://black.com' ||
           stream.safe_pages[0].page === 'https://white.com',
+      );
+    },
+    filterStreamsWithNoLink() {
+      return this.streams.filter(
+        (stream) =>
+          stream.url_rules.length === 0 &&
+          stream.money_pages[0].page !== 'https://black.com' &&
+          stream.safe_pages[0].page !== 'https://white.com',
       );
     },
   },
@@ -156,5 +184,21 @@ table th:first-child {
 table td:last-child,
 table th:last-child {
   border-right: none;
+}
+
+/* stream */
+.streamDeleteBtn {
+  display: inline-block;
+  background: red;
+  border: 1px solid red;
+  padding: 20px;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 15px;
+  transition: all 0.3s;
+}
+.streamDeleteBtn:hover{
+  background: #fff;
+  color: red;
 }
 </style>

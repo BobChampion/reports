@@ -55,10 +55,25 @@ app.post('/api/tests/:campaignName', (req, res) => {
   doPuppetterTask(campaignName, campaigns, res);
 });
 
-app.get('/api/streams', (req, res) => {
-  getStreams().then((data) => {
-    res.send(data);
-  });
+app.get('/api/streams', async (req, res) => {
+  let currentPage = 1;
+  let totalPages = 5;
+  let results = [];
+  const NUM_PAGES = 5; // number of pages to fetch
+
+  (async () => {
+    try {
+      for (let i = 1; i <= NUM_PAGES; i++) {
+        const data = await getStreams(i);
+        console.log(`Page ${i}:`, data.length);
+        results.push(...data);
+        // console.error(results.length);
+      }
+      res.send(results);
+    } catch (error) {
+      console.log(error);
+    }
+  })();
 });
 
 app.get('/api/streamswithclick', (req, res) => {
