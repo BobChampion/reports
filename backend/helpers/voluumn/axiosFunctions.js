@@ -22,6 +22,7 @@ let getCampaigns = async (token) => {
     });
     if (response.data) {
       const data = [];
+      console.log(response.data);
       response.data.campaigns.forEach((campaign) => {
         data.push({
           campaignName: campaign.name,
@@ -39,6 +40,7 @@ let getCampaigns = async (token) => {
           ),
         ),
       ];
+      
       return campaigns;
     }
   } catch (error) {

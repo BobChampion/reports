@@ -1,4 +1,4 @@
-const { adspectAPI, cherryAPI } = require('./axios');
+const { adspectAPI, cherryAPI } = require('./axiosFunctions');
 const STREAMS_PER_PAGE = 100;
 
 const getServers = async () => {

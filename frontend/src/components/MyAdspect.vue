@@ -114,7 +114,7 @@ export default {
     async deleteStream(streamId) {
       try {
         await axios.delete(`https://api.adspect.net/v1/streams/${streamId}`);
-        this.filterStreamsWithNoLink = this.filterStreamsWithNoLink.filter(
+        this.cherryStreams = this.cherryStreams.filter(
           (stream) => stream.stream_id !== streamId,
         );
       } catch (error) {
@@ -137,14 +137,7 @@ export default {
           stream.money_pages[0].page !== 'https://black.com' &&
           stream.safe_pages[0].page !== 'https://white.com',
       );
-    },
-    // filterStreamsWithNoOncherry() {
-    //   const filteredStreams = this.streams.filter((stream) => {
-    //     return !this.cherryStreams.some((cherryStream) => stream.name.includes(cherryStream.domain));
-    //   });
-
-    //   return filteredStreams;
-    // },
+    }
   },
 };
 </script>

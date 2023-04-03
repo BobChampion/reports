@@ -81,7 +81,6 @@ app.get('/api/cherrystreams', async (req, res) => {
       const filteredStreams = streamsResults.filter((stream) => {
         return !cloakers.some((cherryStream) => stream.name.includes(cherryStream.domain));
       });
-      console.log(filteredStreams);
       res.send(filteredStreams);
     } catch (error) {
       console.log(error);
