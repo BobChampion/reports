@@ -3,9 +3,10 @@
     <div class="repotsInner">
       <div class="tableBlock">
         <h2 class="tableBlockTitle">
-          Streams <span>{{ filterStreamsWithNoLink.length }}</span>
+          Streams <span>{{ cherryStreams.length }}</span>
         </h2>
-        <table>
+        <Skeleton v-if="!isGetStreamsData" :count="10" height="30px" />
+        <table v-else>
           <thead class="tableTitles">
             <tr>
               <th>Name</th>
@@ -15,7 +16,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="stream in filterStreamsWithNoLink" :key="stream.stream_id">
+            <tr v-for="stream in cherryStreams" :key="stream.stream_id">
               <td>{{ stream.name }}</td>
               <td>{{ stream.account_id }}</td>
               <td>{{ stream.stream_id }}</td>
@@ -66,8 +67,10 @@ export default {
     return {
       streams: [],
       streamswithclick: [],
+      cherryStreams: [],
       haveData: false,
       lengthZero: false,
+      isGetStreamsData: false,
     };
   },
   async mounted() {
@@ -80,7 +83,18 @@ export default {
       .catch((error) => {
         console.error(error);
       });
-
+    await axios
+      .get('/api/cherrystreams')
+      .then((response) => {
+        if (response.data.length > 0) {
+          this.isGetStreamsData = true;
+        }
+        this.cherryStreams = response.data;
+        console.log(this.cherryStreams);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
     await axios
       .get('/api/streamswithclick')
       .then((response) => {
@@ -91,7 +105,6 @@ export default {
           }
         }
         this.streamswithclick = response.data;
-        console.log(this.streamswithclick);
       })
       .catch((error) => {
         console.error(error);
@@ -125,6 +138,13 @@ export default {
           stream.safe_pages[0].page !== 'https://white.com',
       );
     },
+    // filterStreamsWithNoOncherry() {
+    //   const filteredStreams = this.streams.filter((stream) => {
+    //     return !this.cherryStreams.some((cherryStream) => stream.name.includes(cherryStream.domain));
+    //   });
+
+    //   return filteredStreams;
+    // },
   },
 };
 </script>
@@ -197,7 +217,7 @@ table th:last-child {
   border-radius: 15px;
   transition: all 0.3s;
 }
-.streamDeleteBtn:hover{
+.streamDeleteBtn:hover {
   background: #fff;
   color: red;
 }

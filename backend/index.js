@@ -55,21 +55,34 @@ app.post('/api/tests/:campaignName', (req, res) => {
   doPuppetterTask(campaignName, campaigns, res);
 });
 
-app.get('/api/streams', async (req, res) => {
-  let currentPage = 1;
-  let totalPages = 5;
-  let results = [];
-  const NUM_PAGES = 5; // number of pages to fetch
+const automateCloakers = require('./helpers/cherry/cloakers');
 
+let streamsResults = [];
+app.get('/api/streams', async (req, res) => {
+  streamsResults = [];
+  const NUM_PAGES = 5; // number of pages to fetch
   (async () => {
     try {
       for (let i = 1; i <= NUM_PAGES; i++) {
         const data = await getStreams(i);
-        console.log(`Page ${i}:`, data.length);
-        results.push(...data);
-        // console.error(results.length);
+        streamsResults.push(...data);
       }
-      res.send(results);
+      res.send(streamsResults);
+    } catch (error) {
+      console.log(error);
+    }
+  })();
+});
+
+app.get('/api/cherrystreams', async (req, res) => {
+  (async () => {
+    try {
+      const cloakers = await automateCloakers();
+      const filteredStreams = streamsResults.filter((stream) => {
+        return !cloakers.some((cherryStream) => stream.name.includes(cherryStream.domain));
+      });
+      console.log(filteredStreams);
+      res.send(filteredStreams);
     } catch (error) {
       console.log(error);
     }
