@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from '../../helpers/baseUrl';
 
 export default {
   name: 'CampaignList',

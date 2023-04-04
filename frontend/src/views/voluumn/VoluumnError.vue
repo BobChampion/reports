@@ -1,50 +1,52 @@
 <template>
   <div class="voluumError">
-    <div class="selectDate">
-      <div class="dateInputs">
-        <DateSelect
-          id="start-date-time"
-          label="Start Date/Time"
-          :dateTime="setDefaultStartDate"
-          @selected-date="handleDateSelected"
-        />
-        <DateSelect
-          id="end-date-time"
-          :dateTime="setDefaultEndDate"
-          label="End Date/Time"
-          @selected-date="handleDateSelected"
-        />
+    <div class="container">
+      <div class="selectDate">
+        <div class="dateInputs">
+          <DateSelect
+            id="start-date-time"
+            label="Start Date/Time"
+            :dateTime="setDefaultStartDate"
+            @selected-date="handleDateSelected"
+          />
+          <DateSelect
+            id="end-date-time"
+            :dateTime="setDefaultEndDate"
+            label="End Date/Time"
+            @selected-date="handleDateSelected"
+          />
+        </div>
+        <p class="dateError" v-show="isError">Please select date</p>
+        <button class="getErrors" @click="getErrors">Get Errors</button>
       </div>
-      <p class="dateError" v-show="isError">Please select date</p>
-      <button class="getErrors" @click="getErrors">Get Errors</button>
-    </div>
-    <div class="errorTable" v-show="isClick">
-      <Skeleton v-if="!haveData" :count="10" height="30px" />
-      <table v-else>
-        <thead>
-          <tr>
-            <th>Category</th>
-            <th>Category Name</th>
-            <th>Errors</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="error in errors" :key="error.categoryName">
-            <td>{{ error.category }}</td>
-            <td>{{ error.categoryName }}</td>
-            <td>
-              {{ error.errors }}
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="errorTable" v-show="isClick">
+        <Skeleton v-if="!haveData" :count="10" height="30px" />
+        <table v-else>
+          <thead>
+            <tr>
+              <th>Category</th>
+              <th>Category Name</th>
+              <th>Errors</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="error in errors" :key="error.categoryName">
+              <td>{{ error.category }}</td>
+              <td>{{ error.categoryName }}</td>
+              <td>
+                {{ error.errors }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
-import DateSelect from './DateSelect.vue';
+import axios from '../../helpers/baseUrl';
+import DateSelect from '../../components/Voluumn/DateSelect.vue';
 import getDate, { getTodayDate } from '../../helpers/date';
 import { Skeleton } from 'vue-loading-skeleton';
 
@@ -130,9 +132,6 @@ export default {
 </script>
 
 <style scoped>
-.voluumError {
-  padding: 20px 0;
-}
 .selectDate {
   display: flex;
   flex-direction: column;
@@ -177,6 +176,7 @@ table {
   margin-bottom: 1rem;
   font-family: 'Roboto';
   height: 100%;
+  border: 1px solid #dee2e6;
 }
 
 table th,

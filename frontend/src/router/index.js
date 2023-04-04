@@ -1,9 +1,11 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import MyHome from '../components/MyHome';
-import MyAdspect from '../components/MyAdspect';
-import MyVoluumn from '../components/Voluumn/MyVoluumn.vue';
-import VoluumnError from '../components/Voluumn/VoluumnError.vue';
+import MyStreams from '../views/adspect/MyStreams.vue';
+import StreamsWithClick from '../views/adspect/StreamsWithClick.vue';
+import VoluumnError from '../views/voluumn/VoluumnError.vue';
+import VoluumnValidator from '../views/voluumn/VoluumnValidator.vue';
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -13,19 +15,24 @@ const routes = [
     component: MyHome,
   },
   {
-    path: '/reports',
-    name: 'MyAdspect',
-    component: MyAdspect,
+    path: '/adspect/streams',
+    name: 'MyStreams',
+    component: MyStreams,
   },
   {
-    path: '/voluumn',
-    name: 'MyVoluumn',
-    component: MyVoluumn,
+    path: '/adspect/streamswithclick',
+    name: 'StreamsWithClick',
+    component: StreamsWithClick,
   },
   {
-    path: '/voluumn-error',
+    path: '/voluumn/voluumnerror',
     name: 'VoluumnError',
     component: VoluumnError,
+  },
+  {
+    path: '/voluumn/validator',
+    name: 'VoluumnValidator',
+    component: VoluumnValidator,
   },
 ];
 

@@ -1,19 +1,23 @@
 <template>
-  <div class="voluumn">
-    <h1 class="appTitle">Campaign Validator</h1>
-    <CampaignList @selected-campaign="handleCampaignSelected" />
-    <HistoryTable :tests="tests" />
-    <div class="btnsContainer">
-      <button class="launchBtn" @click="createTest">launch</button>
-      <button class="deleteBtn" @click="deleteHistory">delete history</button>
+  <div class="voluumn-validator">
+    <div class="container">
+      <div class="validator-inner">
+        <h1 class="appTitle">Campaign Validator</h1>
+        <CampaignList @selected-campaign="handleCampaignSelected" />
+        <HistoryTable :tests="tests" />
+        <div class="btnsContainer">
+          <button class="launchBtn" @click="createTest">launch</button>
+          <button class="deleteBtn" @click="deleteHistory">delete history</button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
-import CampaignList from './CampaignList.vue';
-import HistoryTable from './HistoryTable.vue';
+import axios from '../../helpers/baseUrl';
+import CampaignList from '../../components/Voluumn/CampaignList.vue';
+import HistoryTable from '../../components/Voluumn/HistoryTable.vue';
 
 export default {
   name: 'MyVoluumn',
@@ -76,14 +80,16 @@ export default {
 </script>
 
 <style scoped>
-.voluumn {
+.voluumn-validator {
   background: #5d5f66;
+  height: 100%;
+}
+.validator-inner {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   gap: 30px;
-  padding: 20px;
   height: 100%;
 }
 .appTitle {
