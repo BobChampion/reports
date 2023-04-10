@@ -43,15 +43,6 @@ export default {
   },
   async mounted() {
     await axios
-      .get('/api/streams')
-      .then((response) => {
-        this.streams = response.data;
-        console.log(this.streams);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-    await axios
       .get('/api/streamswithclick')
       .then((response) => {
         if (response) {
