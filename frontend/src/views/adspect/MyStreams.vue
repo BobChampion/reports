@@ -69,6 +69,14 @@ export default {
   },
   async mounted() {
     await axios
+      .get('/api/streams')
+      .then((response) => {
+        console.log('getting streams with adspect',response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    await axios
       .get('/api/cherrystreams')
       .then((response) => {
         if (response.data.length > 0) {

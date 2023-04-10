@@ -66,7 +66,6 @@ export default {
       this.isOpen1 = false;
     },
     setActiveLink(link) {
-      console.log(link);
       this.activeLink = link;
     },
   },
