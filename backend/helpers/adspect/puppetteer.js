@@ -102,11 +102,11 @@ let getStreamsWithClick = async (res) => {
       (el, value) => (el.value = value),
       dateRange,
     );
-    await page.waitForSelector('#live', {
-      visible: true,
-      clickable: true,
-    });
-    await page.click('#live');
+    // await page.waitForSelector('#live', {
+    //   visible: true,
+    //   clickable: true,
+    // });
+    // await page.click('#live');
     await page.waitForSelector('thead th.text-nowrap.sorting.sorting_desc', {
       visible: true,
       clickable: true,
