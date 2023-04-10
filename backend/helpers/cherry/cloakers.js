@@ -18,7 +18,9 @@ const getStreams = async (streams = [], page = 1) => {
 
 module.exports = async () => {
   try {
-    const [servers, streams] = await Promise.all([getServers(), getStreams()]);
+    // const [servers, streams] = await Promise.all([getServers(), getStreams()]);
+    const servers = await getServers();
+
     const cloakers = servers.map((cloaker) => ({
       server_id: cloaker.id,
       domain: cloaker.hostname || null,
@@ -26,20 +28,20 @@ module.exports = async () => {
       status: cloaker.state || null,
       created: cloaker.created_at ? new Date(cloaker.created_at) : null,
     }));
-    for (const cloaker of cloakers) {
-      const matchingStream = streams.find(({ name }) =>
-        name?.toLowerCase().split(' ').includes(cloaker.domain?.toLowerCase()),
-      );
-      cloaker.stream_id = matchingStream?.stream_id || null;
-      cloaker.stream_mode = matchingStream?.mode || null;
-      cloaker.platform = matchingStream?.name.split(' ')[0].toLowerCase() || null;
-      cloaker.white_page = matchingStream?.safe_pages[0]?.page || null;
-      cloaker.white_action = matchingStream?.safe_pages[0]?.action || null;
-      cloaker.black_page = matchingStream?.money_pages[0]?.page || null;
-      cloaker.black_action = matchingStream?.money_pages[0]?.action || null;
-      cloaker.delayed_start = matchingStream?.skipClicks ?? null;
-      cloaker.hyperloglog = matchingStream?.hll_threshold ?? null;
-    }
+    // for (const cloaker of cloakers) {
+    //   const matchingStream = streams.find(({ name }) =>
+    //     name?.toLowerCase().split(' ').includes(cloaker.domain?.toLowerCase()),
+    //   );
+    //   cloaker.stream_id = matchingStream?.stream_id || null;
+    //   cloaker.stream_mode = matchingStream?.mode || null;
+    //   cloaker.platform = matchingStream?.name.split(' ')[0].toLowerCase() || null;
+    //   cloaker.white_page = matchingStream?.safe_pages[0]?.page || null;
+    //   cloaker.white_action = matchingStream?.safe_pages[0]?.action || null;
+    //   cloaker.black_page = matchingStream?.money_pages[0]?.page || null;
+    //   cloaker.black_action = matchingStream?.money_pages[0]?.action || null;
+    //   cloaker.delayed_start = matchingStream?.skipClicks ?? null;
+    //   cloaker.hyperloglog = matchingStream?.hll_threshold ?? null;
+    // }
     // require('fs').writeFileSync('./cloakers.json', JSON.stringify(cloakers, null, 2));
     return cloakers;
   } catch (error) {
