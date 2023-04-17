@@ -122,4 +122,13 @@ export default {
 .deleteBtn:hover {
   box-shadow: 0 0 10px red;
 }
+@media screen and (max-width: 767px) {
+  .appTitle {
+    font-size: 30px;
+    color: #fff;
+  }
+  select.campaignsList {
+    width: 90%;
+  }
+}
 </style>

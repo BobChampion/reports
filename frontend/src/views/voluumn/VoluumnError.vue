@@ -204,4 +204,10 @@ table td:last-child,
 table th:last-child {
   border-right: none;
 }
+@media screen and (max-width: 991px) {
+  .dateInputs {
+    flex-direction: column;
+    gap: 20px;
+  }
+}
 </style>

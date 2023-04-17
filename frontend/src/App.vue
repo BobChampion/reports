@@ -37,5 +37,6 @@ export default {
 }
 .appContent {
   height: 88vh;
+  overflow-y: auto;
 }
 </style>

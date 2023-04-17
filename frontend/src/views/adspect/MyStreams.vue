@@ -71,7 +71,7 @@ export default {
     await axios
       .get('/api/streams')
       .then((response) => {
-        console.log('getting streams with adspect',response.data);
+        console.log('getting streams with adspect', response.data);
       })
       .catch((error) => {
         console.error(error);
@@ -264,5 +264,16 @@ table th:last-child {
 
 .mystreams p:last-child {
   margin-bottom: 0;
+}
+
+@media screen and (max-width: 991px) {
+  .pagination {
+    justify-content: flex-start;
+    overflow: scroll;
+  }
+  .mystreams p {
+    margin: 25px 0;
+    margin-bottom: 0;
+  }
 }
 </style>

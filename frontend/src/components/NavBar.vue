@@ -165,4 +165,21 @@ export default {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: all 0.3s;
 }
+
+@media screen and (max-width: 991px) {
+  .navBarInner {
+    width: 40%;
+  }
+}
+@media screen and (max-width: 767px) {
+  .navbar-logo img {
+    height: 65px;
+  }
+  .navBarInner {
+    width: 50%;
+  }
+  .navbar-link {
+    font-size: 16px;
+  }
+}
 </style>

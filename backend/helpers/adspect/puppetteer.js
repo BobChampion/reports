@@ -4,7 +4,7 @@ require('dotenv').config();
 let getStreamsWithClick = async (res) => {
   let allObj = [];
   (async () => {
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({ headless: false });
     const page = await browser.newPage();
 
     await page.setViewport({
@@ -20,11 +20,11 @@ let getStreamsWithClick = async (res) => {
     await page.waitForSelector('input#login-password', { visible: true, clickable: true });
     await page.focus('input#login-password');
     await page.keyboard.type('p$p!s%FTgD,];9c`');
-    await page.waitForSelector('button.btn.btn-block.btn-lg.btn-primary.font-weight-bold', {
+    await page.waitForSelector('button.btn.btn-block.btn-lg.btn-primary', {
       visible: true,
       clickable: true,
     });
-    await page.click('button.btn.btn-block.btn-lg.btn-primary.font-weight-bold');
+    await page.click('button.btn.btn-block.btn-lg.btn-primary');
 
     // home
     await page.waitForSelector(
